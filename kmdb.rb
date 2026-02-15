@@ -76,8 +76,34 @@
 # Christian Bale
 
 # Delete existing data, so you'll start fresh each time this script is run.
+Role.destroy_all
+Actor.destroy_all
+Movie.destroy_all
+Studio.destroy_all
+Agent.destroy_all
+
 # Use `Model.destroy_all` code.
 # TODO!
+warner_bros = Studio.create(name: "Warner Bros.")
+batman_begins = warner_bros.movies.create!(title: "Batman Begins", year_released: 2005, rated: "PG-13")
+dark_knight = warner_bros.movies.create!(title: "The Dark Knight", year_released: 2008, rated: "PG-13")
+dark_knight_rises = warner_bros.movies.create!(title: "The Dark Knight Rises", year_released: 2012, rated: "PG-13")
+christian_bale = Actor.create!(name: "Christian Bale")
+michael_caine = Actor.create!(name: "Michael Caine")
+liam_neeson = Actor.create!(name: "Liam Neeson")
+katie_holmes = Actor.create!(name: "Katie Holmes")
+gary_oldman = Actor.create!(name: "Gary Oldman")
+heath_ledger = Actor.create!(name: "Heath Ledger")
+aaron_eckhart = Actor.create!(name: "Aaron Eckhart")
+maggie_gyllenhaal = Actor.create!(name: "Maggie Gyllenhaal")
+tom_hardy = Actor.create!(name: "Tom Hardy")
+joseph_gordon_levitt = Actor.create!(name: "Joseph Gordon-Levitt")
+anne_hathaway = Actor.create!(name: "Anne Hathaway")
+Role.create!(movie: batman_begins, actor: christian_bale, character_name: "Bruce Wayne")
+Role.create!(movie: batman_begins, actor: michael_caine, character_name: "Alfred")
+Role.create!(movie: batman_begins, actor: liam_neeson, character_name: "Ra's Al Ghul")
+Role.create!(movie: batman_begins, actor: katie_holmes, character_name: "Rachel Dawes")
+Role.create!(movie: batman_begins, actor: gary_oldman, character_name: "Commissioner Gordon")
 
 # Generate models and tables, according to the domain model.
 # TODO!
