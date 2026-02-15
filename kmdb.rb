@@ -99,6 +99,7 @@ maggie_gyllenhaal = Actor.create!(name: "Maggie Gyllenhaal")
 tom_hardy = Actor.create!(name: "Tom Hardy")
 joseph_gordon_levitt = Actor.create!(name: "Joseph Gordon-Levitt")
 anne_hathaway = Actor.create!(name: "Anne Hathaway")
+
 Role.create!(movie: batman_begins, actor: christian_bale, character_name: "Bruce Wayne")
 Role.create!(movie: batman_begins, actor: michael_caine, character_name: "Alfred")
 Role.create!(movie: batman_begins, actor: liam_neeson, character_name: "Ra's Al Ghul")
@@ -107,10 +108,16 @@ Role.create!(movie: batman_begins, actor: gary_oldman, character_name: "Commissi
 
 # Generate models and tables, according to the domain model.
 # TODO!
+Movie.includes(:studio).each do |movie|
+  puts "#{movie.title.ljust(20)} #{movie.year_released}   #{movie.rated}   #{movie.studio.name}"
+end
 
 # Insert data into the database that reflects the sample data shown above.
 # Do not use hard-coded foreign key IDs.
 # TODO!
+Role.includes(:movie, :actor).each do |role|
+  puts "#{role.movie.title.ljust(20)} #{role.actor.name.ljust(20)} #{role.character_name}"
+end
 
 # Prints a header for the movies output
 puts "Movies"
@@ -137,3 +144,7 @@ puts ""
 
 # Query the actor data and loop through the results to display the agent's list of represented actors output.
 # TODO!
+agent = Agent.first
+agent.actors.each do |actor|
+  puts actor.name
+end
