@@ -85,9 +85,9 @@ Agent.destroy_all
 # Use `Model.destroy_all` code.
 # TODO!
 warner_bros = Studio.create(name: "Warner Bros.")
-batman_begins = warner_bros.movies.create!(title: "Batman Begins", year: 2005, rated: "PG-13")
-dark_knight = warner_bros.movies.create!(title: "The Dark Knight", year: 2008, rated: "PG-13")
-dark_knight_rises = warner_bros.movies.create!(title: "The Dark Knight Rises", year: 2012, rated: "PG-13")
+batman_begins = warner_bros.movies.create!(title: "Batman Begins", year_release: 2005, rated: "PG-13")
+dark_knight = warner_bros.movies.create!(title: "The Dark Knight", year_release: 2008, rated: "PG-13")
+dark_knight_rises = warner_bros.movies.create!(title: "The Dark Knight Rises", year_release: 2012, rated: "PG-13")
 christian_bale = Actor.create!(name: "Christian Bale")
 michael_caine = Actor.create!(name: "Michael Caine")
 liam_neeson = Actor.create!(name: "Liam Neeson")
@@ -109,7 +109,7 @@ Role.create!(movie: batman_begins, actor: gary_oldman, character_name: "Commissi
 # Generate models and tables, according to the domain model.
 # TODO!
 Movie.includes(:studio).each do |movie|
-  puts "#{movie.title.ljust(20)} #{movie.year}   #{movie.rated}   #{movie.studio.name}"
+  puts "#{movie.title.ljust(20)} #{movie.year_release}   #{movie.rated}   #{movie.studio.name}"
 end
 
 # Insert data into the database that reflects the sample data shown above.
