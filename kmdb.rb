@@ -76,18 +76,25 @@
 # Christian Bale
 
 # Delete existing data, so you'll start fresh each time this script is run.
+
+
+# Use `Model.destroy_all` code.
+# TODO!
 Role.destroy_all
 Actor.destroy_all
 Movie.destroy_all
 Studio.destroy_all
 Agent.destroy_all
 
-# Use `Model.destroy_all` code.
+
+# Generate models and tables, according to the domain model.
 # TODO!
 warner_bros = Studio.create(name: "Warner Bros.")
-batman_begins = warner_bros.movies.create!(title: "Batman Begins", year_release: 2005, rated: "PG-13")
-dark_knight = warner_bros.movies.create!(title: "The Dark Knight", year_release: 2008, rated: "PG-13")
-dark_knight_rises = warner_bros.movies.create!(title: "The Dark Knight Rises", year_release: 2012, rated: "PG-13")
+
+batman_begins = warner_bros.movies.create!(title: "Batman Begins", year_released: 2005, rated: "PG-13")
+dark_knight = warner_bros.movies.create!(title: "The Dark Knight", year_released: 2008, rated: "PG-13")
+dark_knight_rises = warner_bros.movies.create!(title: "The Dark Knight Rises", year_released: 2012, rated: "PG-13")
+
 christian_bale = Actor.create!(name: "Christian Bale")
 michael_caine = Actor.create!(name: "Michael Caine")
 liam_neeson = Actor.create!(name: "Liam Neeson")
@@ -106,12 +113,6 @@ Role.create!(movie: batman_begins, actor: liam_neeson, character_name: "Ra's Al 
 Role.create!(movie: batman_begins, actor: katie_holmes, character_name: "Rachel Dawes")
 Role.create!(movie: batman_begins, actor: gary_oldman, character_name: "Commissioner Gordon")
 
-# Generate models and tables, according to the domain model.
-# TODO!
-Movie.includes(:studio).each do |movie|
-  puts "#{movie.title.ljust(20)} #{movie.year_release}   #{movie.rated}   #{movie.studio.name}"
-end
-
 # Insert data into the database that reflects the sample data shown above.
 # Do not use hard-coded foreign key IDs.
 # TODO!
@@ -126,6 +127,9 @@ puts ""
 
 # Query the movies data and loop through the results to display the movies output.
 # TODO!
+Movie.includes(:studio).each do |movie|
+  puts "#{movie.title.ljust(20)} #{movie.year_released} #{movie.rated.ljust(6)} #{movie.studio.name}"
+end
 
 # Prints a header for the cast output
 puts ""
@@ -135,6 +139,9 @@ puts ""
 
 # Query the cast data and loop through the results to display the cast output for each movie.
 # TODO!
+Role.includes(:movie, :actor).each do |role|
+  puts "#{role.movie.title.ljust(20)} #{role.actor.name.ljust(20)} #{role.character_name}"
+end
 
 # Prints a header for the agent's list of represented actors output
 puts ""
@@ -145,6 +152,11 @@ puts ""
 # Query the actor data and loop through the results to display the agent's list of represented actors output.
 # TODO!
 agent = Agent.first
-agent.actors.each do |actor|
-  puts actor.name
+if agent.nil?
+  puts "(no agents found)"
+else
+  agent.actors.each do |actor|
+    puts actor.name
+  end
 end
+
